@@ -2,7 +2,7 @@ from django.urls import path, include
 from api_dm import views
 from rest_framework.routers import DefaultRouter
 
-app_user = 'dm'
+app_name = 'dm'
 
 router = DefaultRouter()
 router.register('message', views.MessageViewSet, basename='message')
