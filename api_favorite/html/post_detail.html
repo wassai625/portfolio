@@ -1,0 +1,57 @@
+{% extends 'favorite/base.html' %}
+
+{% block content %}
+<section class="card-body">
+    <div class="card">
+        <div class="card-header">
+            {% if is_user_favorited_for_post %}
+            <button type="button" id="ajax-favorite-for-post" style="border:none;background:none">
+                <i class="fas fa-heart text-danger" id="favorite-for-post-icon"></i>
+            </button>
+            {% else %}
+            <button type="button" id="ajax-favorite-for-post" style="border:none;background:none">
+                <i class="far fa-heart text-danger" id="favorite-for-post-icon"></i>
+            </button>
+            {% endif %}
+            <span id="favorite-for-post-count">{{ favorite_for_post_count }}</span>
+            <span>件のいいね</span>
+        </div>
+        <div class="card-body">
+            <div class="card-title">
+                <h2># {{ post.pk }} {{ post.title }}</h2>
+            </div>
+            <div class="card-text">
+                <span class="fs-6">{{ post.created_at | date:'Y-m-d' }}</span>
+                <p class="fs-6">{{ post.writer }}</p>
+                <div class="mt-5">
+                    {{ post.text }}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% for comment in post.comment_set.all %}
+    <div class="card mt-4">
+        <div class="card-body">
+            <div class="card-title">
+                <span class="fs-6">{{ comment.created_at | date:'Y-m-d' }}</span>
+                <p class="fs-6">{{ comment.writer }}</p>
+            </div>
+            <div class="card-text">
+                <div class="mt-4 mb-4">
+                    {{ comment.text }}
+                </div>
+                <div class="card-footer">
+                    <p>コメントに対するいいね機能の実装場所</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</section>
+
+{% endblock %}
+
+<script type="text/javascript">
+
+
+</script>
