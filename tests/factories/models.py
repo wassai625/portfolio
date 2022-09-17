@@ -1,11 +1,12 @@
 import factory
 
+import core.models
 from core.models import User
 
 class UserFactory(factory.django.DjangoModelFactory):
 
     class Meta:
-        model = 'core.User'
+        model = core.models.User
         django_get_or_create = ('email',)
 
-        email = 'test3@gmail.com'
+    email = 'test5@gmail.com'
