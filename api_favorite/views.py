@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views import generic
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
-from .models import Post, Comment, FavoriteForPost, FavoriteForComment
+from core.models import Post, Comment, FavoriteForPost, FavoriteForComment
 
 
 # Create your views here.
@@ -47,3 +47,22 @@ def favorite_for_post(request):
     context['favorite_for_post_count'] = post.favoriteforpost_set.count()
 
     return JsonResponse(context)
+
+
+def favorite_for_comment(request):
+    comment_pk = request.POST.get('comment_pk')
+    context = {
+        'user': f'{request.user.nickName}'
+    }
+    comment = get_object_or_404(Comment, pk=comment_pk)
+    favorite = FavoriteForComment.objects.filter(target=comment, user=request.user)
+    if favorite.exists():
+        favorite.delete()
+        context['method'] = 'delete'
+    else:
+        favorite.create(target=comment, user=request.user)
+        context['method'] = 'create'
+
+        context['favorite_for_comment_count'] = comment.favoriteforcomment_set.count()
+
+        return JsonResponse(context)

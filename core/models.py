@@ -1,5 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser, AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.utils import timezone
 from django.conf import settings
 
 def upload_path(instance, filename):
@@ -28,6 +29,7 @@ class UserManager(BaseUserManager):
         return user
 
 class User(AbstractBaseUser, PermissionsMixin):
+    pass
 
     email = models.EmailField(max_length=50, unique=True)
     is_active = models.BooleanField(default=True)
@@ -36,6 +38,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
+
+
 
     def __str__(self):
         return self.email
@@ -84,5 +88,37 @@ class Message(models.Model):
     def __str__(self):
         return str(self.sender)
 
-class User(AbstractUser):
-    pass
+class Post(models.Model):
+    """投稿"""
+    writer = models.CharField('投稿者', default='名無し', max_length=32)
+    title = models.CharField('タイトル', max_length=256)
+    text = models.TextField('本文')
+    created_at = models.DateTimeField('作成日', default=timezone.now)
+
+    def __str__(self):
+        return self.title
+
+
+class Comment(models.Model):
+    """コメント"""
+    writer = models.CharField('名前', default='名無し', max_length=32)
+    text = models.TextField('本文')
+    target = models.ForeignKey(Post, on_delete=models.CASCADE, verbose_name='対象記事')
+    created_at = models.DateTimeField('作成日', default=timezone.now)
+
+    def __str__(self):
+        return self.text[:20]
+
+
+class FavoriteForPost(models.Model):
+    """投稿に対するいいね"""
+    target = models.ForeignKey(Post, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(default=timezone.now)
+
+
+class FavoriteForComment(models.Model):
+    """コメントに対するいいね"""
+    target = models.ForeignKey(Comment, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(default=timezone.now)

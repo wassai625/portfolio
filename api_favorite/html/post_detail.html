@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 {% extends 'favorite/base.html' %}
 
 {% block content %}
@@ -9,8 +11,8 @@
                 <i class="fas fa-heart text-danger" id="favorite-for-post-icon"></i>
             </button>
             {% else %}
-            <button type="button" id="ajax-favorite-for-post" style="border:none;background:none">
-                <i class="far fa-heart text-danger" id="favorite-for-post-icon"></i>
+            <button type="button" id="ajax-favorite-for-post1" style="border:none;background:none">
+                <i class="far fa-heart text-danger" id="favorite-for-post-icon1"></i>
             </button>
             {% endif %}
             <span id="favorite-for-post-count">{{ favorite_for_post_count }}</span>
@@ -50,8 +52,6 @@
 </section>
 
 {% endblock %}
-
 <script type="text/javascript">
-
 
 </script>
