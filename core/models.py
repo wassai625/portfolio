@@ -94,6 +94,7 @@ class Post(models.Model):
     title = models.CharField('タイトル', max_length=256)
     text = models.TextField('本文')
     created_at = models.DateTimeField('作成日', default=timezone.now)
+    updated = models.DateTimeField('更新日時', auto_now=True, null=False, blank=False)
 
     def __str__(self):
         return self.title

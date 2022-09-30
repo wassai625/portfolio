@@ -5,10 +5,11 @@ from rest_framework.routers import DefaultRouter
 app_name = 'post'
 
 router = DefaultRouter()
-# router.register('profile', views.ProfileViewSet)
+router.register('posts', views.PostViewSet)
 # router.register('approval', views.FriendRequestViewSet)
 
 urlpatterns = [
+    path('', include(router.urls)),
     path('create/', views.CreatePostView.as_view(), name='create'),
-    path('', include(router.urls))
+
 ]
