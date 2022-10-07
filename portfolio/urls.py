@@ -24,5 +24,6 @@ urlpatterns = [
     path("api/dm/", include("api_dm.urls")),
     path("api/post/", include("api_post.urls")),
     path("api/favorite", include("api_favorite.urls")),
+    path("api/comment", include("api_comment.urls")),
 
 ]
