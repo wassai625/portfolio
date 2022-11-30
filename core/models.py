@@ -7,6 +7,7 @@ def upload_path(instance, filename):
     ext = filename.split('.')[-1]
     return '/'.join(['image', str(instance.userPro.id)+str(instance.nickName)+str(".")+str(ext)])
 
+
 class UserManager(BaseUserManager):
 
     def create_user(self, email, password=None, **extra_fields):
@@ -97,7 +98,16 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+class PostImage(models.Model):
+    image = models.ImageField(upload_to="images")
+    post = models.ForeignKey(
+        Post, on_delete=models.CASCADE, related_name="post_image")
 
+    def __str__(self):
+        return self.post.name
+
+    class Meta:
+        db_table = "post_images"
 
 class Comment(models.Model):
     """コメント"""

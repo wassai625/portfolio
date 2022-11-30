@@ -16,6 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.authtoken import views
+from django.conf import settings # New
+from django.contrib.staticfiles.urls import static # New
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns # New
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -23,5 +27,8 @@ urlpatterns = [
     path("api/user/", include("api_user.urls")),
     path("api/dm/", include("api_dm.urls")),
     path("api/favorite", include("api_favorite.urls")),
+    path("api/post/image", include("api_post_image.urls")),
 
 ]
+urlpatterns += staticfiles_urlpatterns()
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
