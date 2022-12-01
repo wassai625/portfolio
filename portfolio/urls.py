@@ -27,7 +27,8 @@ urlpatterns = [
     path("api/user/", include("api_user.urls")),
     path("api/dm/", include("api_dm.urls")),
     path("api/favorite", include("api_favorite.urls")),
-    path("api/post/image", include("api_post_image.urls")),
+    path("api/post/", include("api_post.urls")),
+    path("api/post/image/", include("api_post_image.urls")),
 
 ]
 urlpatterns += staticfiles_urlpatterns()
