@@ -91,6 +91,7 @@ class Message(models.Model):
 
 class Post(models.Model):
     """投稿"""
+    objects = None
     writer = models.CharField('投稿者', default='名無し', max_length=32)
     title = models.CharField('タイトル', max_length=256)
     text = models.TextField('本文')
@@ -119,6 +120,20 @@ class Comment(models.Model):
     def __str__(self):
         return self.text[:20]
 
+class PostComment(models.Model):
+    objects = None
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    comment_text = models.TextField(max_length=10000)
+    comment_data = models.DateField(auto_now=True)
+    tweet_flag = models.BooleanField(default=False)
+    delete_flag = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    update_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = 'post_comment'
+
 
 class FavoriteForPost(models.Model):
     """投稿に対するいいね"""
@@ -130,5 +145,5 @@ class FavoriteForPost(models.Model):
 class FavoriteForComment(models.Model):
     """コメントに対するいいね"""
     target = models.ForeignKey(Comment, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    timestamp = models.DateTimeField(default=timezone.now)
+    # user = models.ForeignKey(User, on_delete=models.CASCADE)
+    # timestamp = models.DateTimeField(default=timezone.now)
