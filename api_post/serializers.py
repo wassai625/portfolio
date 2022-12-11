@@ -1,19 +1,16 @@
 from rest_framework import serializers
 
-from core.models import Post, PostComment, User
+from core.models import Post
+from api_user.serializers import UserSerializer
 
 class PostSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Post
         fields = ('writer', 'title', 'text', 'created_at')
 
-
-class PostCommentWithForeignSerializer(serializers.ModelSerializer):
-    post = PostSerializer()
-    user = PostSerializer()
+class PostWithForeignSerializer(serializers.ModelSerializer):
+    user = UserSerializer
 
     class Meta:
-        model = PostComment
-        fields = ('id', 'user', 'post', 'comment_text', 'comment_data', 'tweet_flag', 'delete_flag',)
-
+        model = Post
+        fields = ('id', 'user', 'title', 'writer', 'text',)
