@@ -42,6 +42,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 
+
     def __str__(self):
         return self.email
 
@@ -92,6 +93,8 @@ class Message(models.Model):
 class Post(models.Model):
     """投稿"""
     objects = None
+    user = models.ForeignKey(
+        User, null=True, on_delete=models.CASCADE, related_name="post")
     writer = models.CharField('投稿者', default='名無し', max_length=32)
     title = models.CharField('タイトル', max_length=256)
     text = models.TextField('本文')
@@ -126,8 +129,6 @@ class PostComment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     comment_text = models.TextField(max_length=10000)
     comment_data = models.DateField(auto_now=True)
-    tweet_flag = models.BooleanField(default=False)
-    delete_flag = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True)
 
