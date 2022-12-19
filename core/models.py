@@ -135,16 +135,3 @@ class PostComment(models.Model):
     class Meta:
         db_table = 'post_comment'
 
-
-class FavoriteForPost(models.Model):
-    """投稿に対するいいね"""
-    target = models.ForeignKey(Post, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    timestamp = models.DateTimeField(default=timezone.now)
-
-
-class FavoriteForComment(models.Model):
-    """コメントに対するいいね"""
-    target = models.ForeignKey(Comment, on_delete=models.CASCADE)
-    # user = models.ForeignKey(User, on_delete=models.CASCADE)
-    # timestamp = models.DateTimeField(default=timezone.now)

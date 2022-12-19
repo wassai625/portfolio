@@ -51,7 +51,7 @@ class ProfileViewSet(viewsets.ModelViewSet):
         serializer.save(userPro=self.request.user)
 
 
-class MyProfileListView(generics.ListAPIView):
+class ProfileListView(generics.ListAPIView):
     queryset = Profile.objects.all()
     serializer_class = serializers.ProfileSerializer
     authentication_classes = (authentication.TokenAuthentication,)
