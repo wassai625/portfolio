@@ -92,7 +92,6 @@ class Message(models.Model):
 
 class Post(models.Model):
     """投稿"""
-    objects = None
     user = models.ForeignKey(
         User, null=True, on_delete=models.CASCADE, related_name="post")
     writer = models.CharField('投稿者', default='名無し', max_length=32)
@@ -124,7 +123,6 @@ class Comment(models.Model):
         return self.text[:20]
 
 class PostComment(models.Model):
-    objects = None
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     comment_text = models.TextField(max_length=10000)

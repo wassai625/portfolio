@@ -15,12 +15,11 @@ class PostWithForeignSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class PostCommentWithForeignSerializer(serializers.ModelSerializer):
-    post = serializers.SerializerMethodField
     class Meta:
         model = PostComment
-        fields = ('id', 'user', 'post', 'comment_text', 'comment_data',)
+        fields = '__all__'
 
-    def create(self, validated_data):
-        return Post(**validated_data)
-
+    # def create(self, validated_data):
+    #     return PostComment(**validated_data)
+    #
 
